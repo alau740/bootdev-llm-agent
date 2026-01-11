@@ -16,6 +16,7 @@ parser.add_argument("--verbose", action="store_true", help="Enable verbose outpu
 args = parser.parse_args()
 # Now we can access `args.user_prompt`
 
+# Create the prompt that it will use
 messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
 
 
