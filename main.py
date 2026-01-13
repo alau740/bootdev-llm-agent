@@ -30,6 +30,7 @@ text = client.models.generate_content(model="gemini-2.5-flash", contents=message
 if text.usage_metadata is None:
     raise RuntimeError("API request failed")
 
+# debug & to check token usage (for API limits)
 if args.verbose:
     print(f"User prompt: {args.user_prompt}\nPrompt tokens: {text.usage_metadata.prompt_token_count}\nResponse tokens: {text.usage_metadata.candidates_token_count}")
 
