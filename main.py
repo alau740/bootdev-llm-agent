@@ -10,6 +10,7 @@ api_key = os.environ.get("GEMINI_API_KEY")
 if api_key is None:
     raise Exception("missing api key")
 
+# Parse and add the arguments
 parser = argparse.ArgumentParser(description="Chatbot")
 parser.add_argument("user_prompt", type=str, help="User prompt")
 parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
