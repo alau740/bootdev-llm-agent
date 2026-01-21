@@ -6,4 +6,7 @@ def get_files_info(working_directory, directory="."):
     if not os.path.isdir(directory):
         return f'Error: Cannot list "{directory}" as it is not a directory'
     
-
+    # Check if target_dir is in working_dir_abs
+    valid_target_path = os.path.commonpath([working_dir_abs, target_dir])
+    if not valid_target_path:
+        return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
