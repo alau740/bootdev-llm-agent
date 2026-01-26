@@ -17,6 +17,6 @@ def get_files_info(working_directory, directory="."):
             )
         return "\n".join(files_info)
     except Exception as e:
-        # safeguard
+        # safeguard, ensure prevent llm from accessing outside the enviroment
         return f"Error listing files: {e}"
     
