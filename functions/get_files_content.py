@@ -1,5 +1,5 @@
 import os
-MAX_CHARS = 10000 # character limit
+from config import MAX_CHARS
 # this is similar to get_files_info
 def get_file_content(working_directory, file_path):
         abs_working_dir = os.path.abspath(working_directory)
