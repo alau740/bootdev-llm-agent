@@ -7,10 +7,15 @@ def get_file_content(working_directory, file_path):
         if not os.path.isfile(file_path): # not a file, safeguard
              return f'Error: File not found or is not a regular file: "{file_path}"'
         
-        # Open the file_path as read only, read up to MAX_CHARS
-        with open(file_path, "r") as f:
-            file_content_string = f.read(MAX_CHARS)
-        # After reading the first MAX_CHARS...
-        if f.read(1): # Read another character to see if there are any remaining
-            content += f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
+        try:
+            # Open the file_path as read only, read up to MAX_CHARS
+            with open(file_path, "r") as f:
+                file_content_string = f.read(MAX_CHARS)
+            # After reading the first MAX_CHARS...
+            if f.read(1): # Read another character to see if there are any remaining
+                content += f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
+        except Exception:
+             return f"Error: {Exception}"
+        
+
 
