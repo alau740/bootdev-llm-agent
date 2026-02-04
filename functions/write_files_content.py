@@ -9,13 +9,14 @@ def write_file(working_directory, file_path, content):
         if os.path.isdir(file_path): # not a file, safeguard
             return f'Error: Cannot write to "{file_path}" as it is a directory'
         
+        print("makedir")
         os.makedirs(file_path, exist_ok=True)
 
+        print("Opening file")
         with open(file_path, "w") as f:
             f.write(content)
         
         return f'Successfully wrote to "{file_path}" ({len(content)} characters written)'
-
 
 
         raise NotImplementedError("Not implemented")
