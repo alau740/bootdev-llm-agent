@@ -6,20 +6,19 @@ def write_file(working_directory, file_path, content):
         print(abs_working_dir, target_file)
         if os.path.commonpath([abs_working_dir, target_file]) != abs_working_dir:
             return f'Error: Cannot write to "{file_path}" as it is outside the permitted working directory'
-        if os.path.isdir(file_path): # not a file, safeguard
+        if os.path.isdir(file_path): # Check for existing file
             return f'Error: Cannot write to "{file_path}" as it is a directory'
         
-        print("makedir")
-        os.makedirs(file_path, exist_ok=True)
+        print(f"makedir {file_path}")
+        os.makedirs(os.path.dirname(target_file), exist_ok=True)
 
-        print("Opening file")
+        print(f"Opening file {file_path}")
         with open(file_path, "w") as f:
             f.write(content)
         
         return f'Successfully wrote to "{file_path}" ({len(content)} characters written)'
 
 
-        raise NotImplementedError("Not implemented")
 
     except Exception as e:
         return f"Error: {e}"
