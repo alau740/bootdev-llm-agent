@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 # Learning purposes only
 def run_python_file(working_directory, file_path, args=None):
@@ -16,6 +17,10 @@ def run_python_file(working_directory, file_path, args=None):
 
         command = ["python", abs_working_dir] # build command
         command.extend(args) # Extend command with any args passed to the function
+
+
+        process = subprocess.run(command, cwd=working_directory, text=True, timeout=30, capture_output=True)
+
 
     except Exception as e:
         return f"Error: executing Python file: {e}"
