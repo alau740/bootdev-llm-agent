@@ -19,7 +19,9 @@ def run_python_file(working_directory, file_path, args=None):
         command.extend(args) # Extend command with any args passed to the function
 
 
-        process = subprocess.run(command, cwd=working_directory, text=True, timeout=30, capture_output=True)
+        process = subprocess.run(command, cwd=working_directory, text=True, timeout=30, capture_output=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        print(f"{process.stdout}, {process.stderr}")
+
 
 
     except Exception as e:
