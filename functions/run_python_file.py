@@ -20,7 +20,13 @@ def run_python_file(working_directory, file_path, args=None):
 
 
         process = subprocess.run(command, cwd=working_directory, text=True, timeout=30, capture_output=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        print(f"{process.stdout}, {process.stderr}")
+        stdout = process.stdout or "No output produced"
+        stderr = process.stderr or "No output produced"
+
+        output = f"STDOUT:{stdout}\nSTDERR: {stderr}"
+
+        if process.returncode != 0: # Indicates some kind of execution error
+            output += f"\nProcess exited with code {process.returncode}"
 
 
 
