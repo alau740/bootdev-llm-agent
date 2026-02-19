@@ -10,7 +10,7 @@ def test():
     result = run_python_file("calculator", "../main.py")
     print(result)
 
-    result = run_python_file("calculator", "nonexistent.py")
+    result = run_python_file("calculator", "nonexistent.py") # test validation
     print(result)
 
     result = run_python_file("calculator", "lorem.txt")
