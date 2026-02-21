@@ -4,6 +4,7 @@ from google import genai
 from google.genai import types
 import argparse
 import sys
+from prompts import system_prompt
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -27,7 +28,11 @@ if args.user_prompt is None:
 
 # Send prompt
 client = genai.Client(api_key=api_key)
-text = client.models.generate_content(model="gemini-2.5-flash", contents=messages)
+text = client.models.generate_content(
+    model="gemini-2.5-flash", 
+    contents=messages,
+    config=types.GenerateContentConfig(system_instruction=system_prompt)
+    )
 if text.usage_metadata is None:
     raise RuntimeError("API request failed")
 
