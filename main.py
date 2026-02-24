@@ -5,6 +5,7 @@ from google.genai import types
 import argparse
 import sys
 from prompts import system_prompt
+from functions.get_functions import available_functions
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -33,6 +34,7 @@ text = client.models.generate_content(
     contents=messages,
     config=types.GenerateContentConfig(
         system_instruction=system_prompt,
+        tools=[available_functions],
         temperature = 0
     )
     )
