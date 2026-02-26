@@ -49,5 +49,6 @@ print(text.text)
 
 if text.function_calls:
     for name,arg in text.function_calls:
+        print(name, arg)
         pass
 
