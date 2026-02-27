@@ -49,6 +49,6 @@ print(text.text)
 
 if text.function_calls:
     for name,arg in text.function_calls:
-        print(name, arg)
+        print(f"Calling function: {name}({args})")
         pass
 
