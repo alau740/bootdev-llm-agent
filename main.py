@@ -5,7 +5,7 @@ from google.genai import types
 import argparse
 import sys
 from prompts import system_prompt
-from functions.get_functions import available_functions
+from functions.call_function import available_functions
 
 load_dotenv()
 api_key = os.environ.get("GEMINI_API_KEY")
@@ -29,7 +29,7 @@ if args.user_prompt is None:
 
 # Send prompt
 client = genai.Client(api_key=api_key)
-text = client.models.generate_content(
+response = client.models.generate_content(
     model="gemini-2.5-flash", 
     contents=messages,
     config=types.GenerateContentConfig(
@@ -38,17 +38,24 @@ text = client.models.generate_content(
         temperature = 0
     )
     )
-if text.usage_metadata is None:
+if response.usage_metadata is None:
     raise RuntimeError("API request failed")
 
 # debug & to check token usage (for API limits)
 if args.verbose:
-    print(f"User prompt: {args.user_prompt}\nPrompt tokens: {text.usage_metadata.prompt_token_count}\nResponse tokens: {text.usage_metadata.candidates_token_count}")
+    print(f"User prompt: {args.user_prompt}\nPrompt tokens: {response.usage_metadata.prompt_token_count}\nResponse tokens: {response.usage_metadata.candidates_token_count}")
 
-print(text.text)
+if not response.function_calls:
+    print(f"Response:\n{response.text}")
+    return
 
-if text.function_calls:
-    for name,arg in text.function_calls:
-        print(f"Calling function: {name}({args})")
-        pass
+if response.function_calls:
+    for function_call in response.function_calls:
+        print(f"Calling function: {function_call.name}({function_call.args})")
+        return
+
+
+
+if __name__ == "__main__":
+    pass
 

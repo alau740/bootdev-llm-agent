@@ -6,19 +6,6 @@ from google.genai import types
 
 def get_files_info(working_directory, directory="."):
 
-    schema_get_files_info = types.FunctionDeclaration(
-        name="get_files_info",
-        description="Lists files in a specified directory relative to the working directory, providing file size and directory status",
-        parameters=types.Schema(
-            type=types.Type.OBJECT,
-            properties={
-                "directory": types.Schema(
-                    type=types.Type.STRING,
-                    description="Directory path to list files from, relative to the working directory (default is the working directory itself)",
-                ),
-            },
-        ),
-    )
 
     try:
         abs_working_dir = os.path.abspath(working_directory)
@@ -39,4 +26,17 @@ def get_files_info(working_directory, directory="."):
     except Exception as e:
         # safeguard, ensure prevent llm from accessing outside the enviroment
         return f"Error listing files: {e}"
-    
+
+schema_get_files_info = types.FunctionDeclaration(
+    name="get_files_info",
+    description="Lists files in a specified directory relative to the working directory, providing file size and directory status",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="Directory path to list files from, relative to the working directory (default is the working directory itself)",
+            ),
+        },
+    ),
+)
