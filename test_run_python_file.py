@@ -16,6 +16,8 @@ def test():
     result = run_python_file("calculator", "lorem.txt") # not a python file
     print(result)
 
+    result = run_python_file("calculator", "test.txt")
+
 
 if __name__ == "__main__":
     test()
