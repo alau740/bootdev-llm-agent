@@ -1,5 +1,6 @@
 from google import genai
 from google.genai import types
+import functions
 from functions.get_files_info import schema_get_files_info
 from functions.run_python_file import schema_run_python_file
 from functions.write_files_content import schema_write_files_content
@@ -12,3 +13,36 @@ available_functions = types.Tool(
                            schema_write_files_content
                            ],
 )
+
+def call_function(function_call, verbose=False):
+    function_map = {
+    "get_file_content": functions.get_file_content,
+    "get_file_info": functions.get_files_info,
+    "write_files_content": functions.write_files_content.write_file,
+    "run_python_file": functions.run_python_file.run_python_file
+    # etc.
+    }
+
+    
+    function_name = function_call.name or ""
+
+    if verbose:
+        print(f"Calling function: {function_call.name}({function_call.args})")
+    else:
+        print(f" - Calling function: {function_call.name}")
+    pass
+
+    if function_name not in function_map:
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"error": f"Unknown function: {function_name}"},
+                )
+            ],
+        )
+    
+    args = dict(function_call.args) if function_call.args else {}
+    args["working_directory"] = "./calculator"
+    
