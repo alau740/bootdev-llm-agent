@@ -51,7 +51,7 @@ def generate_content(client, messages, verbose):
         return
 
     for function_call in response.function_calls:
-        function_call_result = call_function(function_call)
+        function_call_result = call_function(function_call, verbose)
         if function_call_result.parts is None:
             raise TypeError("function_call_results has an empty parts list")
         if function_call_result.parts[0].function_response is None:
