@@ -23,14 +23,13 @@ def call_function(function_call, verbose=False):
     # etc.
     }
 
-    
-    function_name = function_call.name or ""
-
     if verbose:
         print(f"Calling function: {function_call.name}({function_call.args})")
     else:
         print(f" - Calling function: {function_call.name}")
     pass
+    
+    function_name = function_call.name or ""
 
     if function_name not in function_map:
         return types.Content(
