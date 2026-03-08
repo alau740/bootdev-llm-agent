@@ -16,7 +16,7 @@ available_functions = types.Tool(
 
 def call_function(function_call, verbose=False):
     function_map = {
-    "get_file_content": functions.get_file_content,
+    "get_file_content": functions.get_files_content,
     "get_file_info": functions.get_files_info,
     "write_files_content": functions.write_files_content.write_file,
     "run_python_file": functions.run_python_file.run_python_file
