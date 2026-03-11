@@ -20,7 +20,6 @@ def call_function(function_call, verbose=False):
     "get_file_info": functions.get_files_info,
     "write_files_content": functions.write_files_content.write_file,
     "run_python_file": functions.run_python_file.run_python_file
-    # etc.
     }
 
     function_name = function_call.name or ""
