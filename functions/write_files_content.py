@@ -23,7 +23,7 @@ def write_file(working_directory, file_path, content):
     
 schema_write_files_content = types.FunctionDeclaration(
     name="write_files_content",
-    description="Write the file with content passed in as an argument, and writes this to the specified file",
+    description="Write the file with content passed in as an argument, and writes this to the specified fileWrites text content to a specified file within the working directory (overwriting if the file exists)",
     parameters=types.Schema(
         type=types.Type.OBJECT,
         properties={
