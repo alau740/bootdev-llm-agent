@@ -27,41 +27,45 @@ def main():
 
     generate_content(client, messages, args.verbose)
 
+def call_model(functions, system_instructions):
+    pass
 
 def generate_content(client, messages, verbose):
-    function_result_response_list = []
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=messages,
-        config=types.GenerateContentConfig(
-            tools=[available_functions], system_instruction=system_prompt
-        ),
-    )
-    if not response.usage_metadata:
-        raise RuntimeError("Gemini API response appears to be malformed")
+    for _ in range(20): # Limit loop iterations to avoid API key limit exhaustion
+    # call the model, handle responses, etc.
+        function_result_response_list = []
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=messages,
+            config=types.GenerateContentConfig(
+                tools=[available_functions], system_instruction=system_prompt
+            ),
+        )
+        if not response.usage_metadata:
+            raise RuntimeError("Gemini API response appears to be malformed")
 
-    if verbose:
-        print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-        print("Response tokens:", response.usage_metadata.candidates_token_count)
-
-    if not response.function_calls:
-        print("Response:")
-        print(response.text)
-        return
-
-    for function_call in response.function_calls:
-        function_call_result = call_function(function_call, verbose)
-        if function_call_result.parts is None:
-            raise TypeError("function_call_results has an empty parts list")
-        if function_call_result.parts[0].function_response is None:
-            raise TypeError("function_call_results is not FunctionResponse object")
-        if function_call_result.parts[0].function_response.response is None:
-            raise TypeError("function_call_results has no response")
-        
-        function_result_response_list.append(function_call_result.parts[0]) # Only if no errors
-    
         if verbose:
-            print(f"-> {function_call_result.parts[0].function_response.response}")
+            print("Prompt tokens:", response.usage_metadata.prompt_token_count)
+            print("Response tokens:", response.usage_metadata.candidates_token_count)
+
+        if not response.function_calls:
+            print("Response:")
+            print(response.text)
+            return
+
+        for function_call in response.function_calls:
+            function_call_result = call_function(function_call, verbose)
+            if function_call_result.parts is None:
+                raise TypeError("function_call_results has an empty parts list")
+            if function_call_result.parts[0].function_response is None:
+                raise TypeError("function_call_results is not FunctionResponse object")
+            if function_call_result.parts[0].function_response.response is None:
+                raise TypeError("function_call_results has no response")
+            
+            function_result_response_list.append(function_call_result.parts[0]) # Only if no errors
+        
+            if verbose:
+                print(f"-> {function_call_result.parts[0].function_response.response}")
 
 
 if __name__ == "__main__":
