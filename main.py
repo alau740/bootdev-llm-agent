@@ -41,6 +41,10 @@ def generate_content(client, messages, verbose):
                 tools=[available_functions], system_instruction=system_prompt
             ),
         )
+        if response.candidates:
+            for candidate in response.candidates:
+                messages.append(candidate)
+
         if not response.usage_metadata:
             raise RuntimeError("Gemini API response appears to be malformed")
 
@@ -66,6 +70,7 @@ def generate_content(client, messages, verbose):
         
             if verbose:
                 print(f"-> {function_call_result.parts[0].function_response.response}")
+
 
 
 if __name__ == "__main__":
