@@ -70,6 +70,7 @@ def generate_content(client, messages, verbose):
         
             if verbose:
                 print(f"-> {function_call_result.parts[0].function_response.response}")
+                messages.append(types.Content(role="user", parts=function))
 
 
 
