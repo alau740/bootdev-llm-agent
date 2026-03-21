@@ -76,3 +76,4 @@ def generate_content(client, messages, verbose):
 
 if __name__ == "__main__":
     main()
+    
