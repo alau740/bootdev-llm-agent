@@ -82,9 +82,10 @@ def generate_content(client, messages, verbose):
         
         function_result_response_list.append(function_call_result.parts[0]) # Only if no errors
     
+        messages.append(types.Content(role="user", parts=function))
+        
         if verbose:
             print(f"-> {function_call_result.parts[0].function_response.response}")
-            messages.append(types.Content(role="user", parts=function)) # append
 
 
 
