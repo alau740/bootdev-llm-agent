@@ -1,3 +1,3 @@
 MAX_CHARS = 10000
 WORKING_DIR = "./calculator"
-MAX_ITERS = 20 # Max iterations for agent
+MAX_ITERS = 10 # Max iterations for agent
